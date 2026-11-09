@@ -62,10 +62,14 @@ metrics:
     method: internal measurements were never published
 no_metrics: true
 artifacts:
-  - src: /img/cases/beerzhevik/home.webp
+  - src: /img/cases/beerzhevik/before.webp
     orientation: portrait
-    caption: Mobile home — placeholder until the real screenshot arrives
-    source: placeholder
+    caption: Before — a screen without live prices
+    source: owner's screenshot
+  - src: /img/cases/beerzhevik/after.webp
+    orientation: portrait
+    caption: After — a live exchange, daily drops, categories
+    source: owner's screenshot
 retro: TODO
 sources:
   - Resume, November 2026

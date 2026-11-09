@@ -66,7 +66,7 @@ compare:
   after: /img/cases/veloman/after.webp
   before_alt: Главная veloman.by до редизайна
   after_alt: Главная veloman.by после редизайна
-  caption: Слева — старый сайт, справа — новая версия. Слева — старый сайт, справа — новая версия.
+  caption: "Слева — старый сайт, справа — новая версия."
 artifacts: []
 retro: TODO
 sources:

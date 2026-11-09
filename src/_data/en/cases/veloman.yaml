@@ -64,7 +64,7 @@ compare:
   after: /img/cases/veloman/after.webp
   before_alt: veloman.by home page before the redesign
   after_alt: veloman.by home page after the redesign
-  caption: On the left the old site, on the right the new one. On the left the old site, on the right the new one.
+  caption: "On the left the old site, on the right the new one."
 artifacts: []
 retro: TODO
 sources:

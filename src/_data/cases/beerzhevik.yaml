@@ -63,10 +63,14 @@ metrics:
     method: внутренние замеры проекта не публиковались
 no_metrics: true
 artifacts:
-  - src: /img/cases/beerzhevik/home.webp
+  - src: /img/cases/beerzhevik/before.webp
     orientation: portrait
-    caption: Мобильная главная — заглушка до замены на реальный скриншот
-    source: заглушка
+    caption: До работы — экран без обновления цен
+    source: скриншот владельца
+  - src: /img/cases/beerzhevik/after.webp
+    orientation: portrait
+    caption: После — живая биржа, падения дня, категории
+    source: скриншот владельца
 retro: TODO
 sources:
   - Резюме, ноябрь 2026

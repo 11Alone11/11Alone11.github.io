@@ -16,7 +16,7 @@
     clip-path: circle(0% at var(--theme-x, 50%) var(--theme-y, 50%));
   }
   to {
-    clip-path: circle(140% at var(--theme-x, 50%) var(--theme-y, 50%));
+    clip-path: circle(150vmax at var(--theme-x, 50%) var(--theme-y, 50%));
   }
 }
 
@@ -894,6 +894,16 @@
 
   .artifact--portrait {
     max-width: 320px;
+  }
+
+  .artifact-grid--pair {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+    justify-content: center;
+    gap: var(--space-5);
+  }
+
+  .artifact-grid--pair .artifact--portrait {
+    max-width: none;
   }
 
   .artifact__image {

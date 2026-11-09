@@ -86,7 +86,8 @@ layout: layouts/base.njk
 
     <section class="case__section case__section--bleed">
       <h2 class="case__section-title">{{ i18n[lang or 'ru'].case_artifacts }}</h2>
-      <div class="artifact-grid">
+      {%- set pair = c.artifacts.length > 1 and c.artifacts[0].orientation == "portrait" %}
+      <div class="artifact-grid{% if pair %} artifact-grid--pair{% endif %}">
         {% for a in c.artifacts %}
         <figure class="artifact artifact--{{ a.orientation }}">
           {%- set isPortrait = a.orientation == "portrait" %}
