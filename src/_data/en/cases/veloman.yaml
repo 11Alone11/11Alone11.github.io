@@ -60,11 +60,11 @@ metrics:
     method: the project was delivered without public measurements
 no_metrics: true
 compare:
-  before: /img/cases/veloman/before.png
-  after: /img/cases/veloman/after.png
+  before: /img/cases/veloman/before.webp
+  after: /img/cases/veloman/after.webp
   before_alt: veloman.by home page before the redesign
   after_alt: veloman.by home page after the redesign
-  caption: On the left the old site, on the right the new one. Placeholders until real screenshots arrive.
+  caption: On the left the old site, on the right the new one. On the left the old site, on the right the new one.
 artifacts: []
 retro: TODO
 sources:

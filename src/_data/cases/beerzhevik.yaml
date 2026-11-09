@@ -63,7 +63,7 @@ metrics:
     method: внутренние замеры проекта не публиковались
 no_metrics: true
 artifacts:
-  - src: /img/cases/beerzhevik/home.png
+  - src: /img/cases/beerzhevik/home.webp
     orientation: portrait
     caption: Мобильная главная — заглушка до замены на реальный скриншот
     source: заглушка

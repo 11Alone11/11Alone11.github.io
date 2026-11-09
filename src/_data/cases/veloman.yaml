@@ -62,11 +62,11 @@ metrics:
     method: проект сдан без публичных замеров
 no_metrics: true
 compare:
-  before: /img/cases/veloman/before.png
-  after: /img/cases/veloman/after.png
+  before: /img/cases/veloman/before.webp
+  after: /img/cases/veloman/after.webp
   before_alt: Главная veloman.by до редизайна
   after_alt: Главная veloman.by после редизайна
-  caption: Слева — старый сайт, справа — новая версия. Заглушки до замены на реальные скриншоты.
+  caption: Слева — старый сайт, справа — новая версия. Слева — старый сайт, справа — новая версия.
 artifacts: []
 retro: TODO
 sources:

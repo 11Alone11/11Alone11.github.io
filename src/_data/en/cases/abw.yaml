@@ -72,14 +72,21 @@ metrics:
     method: including the multi-step listing form
     source: resume, November 2026 — Bonustorg section
 artifacts:
-  - src: /img/cases/abw/home.png
+  - src: /img/cases/abw/home.webp
     orientation: landscape
-    caption: Home page — placeholder until the real screenshot arrives
-    source: placeholder
-  - src: /img/cases/abw/filters.png
+    caption: Car search — the entry point of the buying flow
+  - src: /img/cases/abw/filters.webp
     orientation: landscape
-    caption: Filters with URL state — placeholder
-    source: placeholder
+    caption: Filters with URL state, chips and saved searches
+  - src: /img/cases/abw/form.webp
+    orientation: landscape
+    caption: Listing submission — a multi-step form with drafts
+  - src: /img/cases/abw/vehicle.webp
+    orientation: landscape
+    caption: Vehicle detail page
+  - src: /img/cases/abw/news.webp
+    orientation: landscape
+    caption: News and authored articles
 retro: TODO
 sources:
   - Resume, November 2026

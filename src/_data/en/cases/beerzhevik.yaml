@@ -62,7 +62,7 @@ metrics:
     method: internal measurements were never published
 no_metrics: true
 artifacts:
-  - src: /img/cases/beerzhevik/home.png
+  - src: /img/cases/beerzhevik/home.webp
     orientation: portrait
     caption: Mobile home — placeholder until the real screenshot arrives
     source: placeholder

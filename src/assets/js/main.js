@@ -1,164 +1,165 @@
-/**
- * Тема оформления.
- * Начальное значение выставляет инлайн-скрипт в <head>, здесь — только переключение.
- */
-const THEME_KEY = "theme";
 const root = document.documentElement;
+const THEME_KEY = "theme";
 
+/* Тема. Начальное значение выставляет инлайн-скрипт в <head>,
+   здесь — переключение с круговой заливкой из точки клика. */
 function applyTheme(theme) {
   root.dataset.theme = theme;
+
   try {
     localStorage.setItem(THEME_KEY, theme);
   } catch (error) {
-    /* приватный режим — тема просто не запомнится */
+    /* приватный режим: тема просто не запомнится */
   }
 }
 
-function toggleTheme() {
+function toggleTheme(event) {
   const next = root.dataset.theme === "dark" ? "light" : "dark";
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (!document.startViewTransition || reduce) {
+  if (!document.startViewTransition || reduceMotion) {
     applyTheme(next);
     return;
   }
 
+  const rect = event.currentTarget.getBoundingClientRect();
+  root.style.setProperty("--theme-x", `${rect.left + rect.width / 2}px`);
+  root.style.setProperty("--theme-y", `${rect.top + rect.height / 2}px`);
   document.startViewTransition(() => applyTheme(next));
 }
 
 document.querySelector(".js-theme-toggle")?.addEventListener("click", toggleTheme);
 
-/* Сравнение «до / после» */
-document.querySelectorAll(".js-compare").forEach(function (block) {
-  var range = block.querySelector(".compare__range");
-  if (!range) return;
-  range.addEventListener("input", function () {
-    block.style.setProperty("--pos", range.value + "%");
-  });
-});
+/* Сравнение «до / после»: ползунок двигает границу между кадрами. */
+for (const block of document.querySelectorAll(".js-compare")) {
+  const range = block.querySelector(".compare__range");
 
-/* Анатомия страницы */
-var anatomyButton = document.querySelector(".js-anatomy");
-
-if (anatomyButton) {
-  anatomyButton.addEventListener("click", function () {
-    var enabled = document.documentElement.classList.toggle("is-anatomy");
-    anatomyButton.setAttribute("aria-pressed", String(enabled));
+  range?.addEventListener("input", () => {
+    block.style.setProperty("--pos", `${range.value}%`);
   });
 }
 
-/* Вес страницы: сколько реально пришло по сети */
-var budgetField = document.querySelector(".js-budget");
+/* Анатомия страницы: показывает сетку и контуры блоков. */
+const anatomyButton = document.querySelector(".js-anatomy");
 
-if (budgetField && window.performance && performance.getEntriesByType) {
-  window.addEventListener("load", function () {
-    var nav = performance.getEntriesByType("navigation")[0];
-    var resources = performance.getEntriesByType("resource");
-    var total = (nav ? nav.transferSize : 0);
+anatomyButton?.addEventListener("click", () => {
+  const enabled = root.classList.toggle("is-anatomy");
+  anatomyButton.setAttribute("aria-pressed", String(enabled));
+});
 
-    resources.forEach(function (entry) {
-      total += entry.transferSize || 0;
-    });
+/* Вес страницы: суммарный transferSize этого открытия. */
+const budgetField = document.querySelector(".js-budget");
+
+if (budgetField && performance.getEntriesByType) {
+  window.addEventListener("load", () => {
+    const [navigation] = performance.getEntriesByType("navigation");
+    const resources = performance.getEntriesByType("resource");
+    const total = resources.reduce((sum, entry) => sum + (entry.transferSize || 0), navigation?.transferSize || 0);
 
     if (total > 0) {
-      var label = budgetField.getAttribute("data-label") || "this page";
-      var unit = document.documentElement.lang === "en" ? " KB" : " КБ";
-      budgetField.textContent = label + ": " + Math.round(total / 1024) + unit;
+      const label = budgetField.dataset.label || "this page";
+      const unit = root.lang === "en" ? " KB" : " КБ";
+      budgetField.textContent = `${label}: ${Math.round(total / 1024)}${unit}`;
     }
   });
 }
 
-/* Командная палитра */
-var palette = document.querySelector(".js-palette");
-var paletteInput = document.querySelector(".js-palette-input");
-var paletteItems = palette ? Array.prototype.slice.call(palette.querySelectorAll(".palette__item")) : [];
-var activeIndex = 0;
+/* Командная палитра. */
+const palette = document.querySelector(".js-palette");
+const paletteInput = document.querySelector(".js-palette-input");
+const paletteItems = palette ? [...palette.querySelectorAll(".palette__item")] : [];
+let activeIndex = 0;
 
 function visibleItems() {
-  return paletteItems.filter(function (item) { return !item.hidden; });
+  return paletteItems.filter((item) => !item.hidden);
 }
 
 function selectItem(index) {
-  var items = visibleItems();
-  if (!items.length) return;
+  const items = visibleItems();
+
+  if (!items.length) {
+    return;
+  }
+
   activeIndex = (index + items.length) % items.length;
-  paletteItems.forEach(function (item) { item.setAttribute("aria-selected", "false"); });
+  paletteItems.forEach((item) => item.setAttribute("aria-selected", "false"));
   items[activeIndex].setAttribute("aria-selected", "true");
   items[activeIndex].scrollIntoView({ block: "nearest" });
 }
 
 function filterPalette() {
-  var query = paletteInput.value.trim().toLowerCase();
-  paletteItems.forEach(function (item) {
-    item.hidden = query !== "" && item.textContent.toLowerCase().indexOf(query) === -1;
+  const query = paletteInput.value.trim().toLowerCase();
+
+  paletteItems.forEach((item) => {
+    item.hidden = query !== "" && !item.textContent.toLowerCase().includes(query);
   });
-  palette.querySelectorAll(".palette__group").forEach(function (group) {
-    var next = group.nextElementSibling;
-    var hasVisible = false;
-    while (next && !next.classList.contains("palette__group")) {
-      if (!next.hidden) hasVisible = true;
-      next = next.nextElementSibling;
+
+  palette.querySelectorAll(".palette__group").forEach((group) => {
+    let sibling = group.nextElementSibling;
+    let hasVisible = false;
+
+    while (sibling && !sibling.classList.contains("palette__group")) {
+      hasVisible ||= !sibling.hidden;
+      sibling = sibling.nextElementSibling;
     }
+
     group.hidden = !hasVisible;
   });
+
   selectItem(0);
 }
 
-function copyEmail() {
-  var link = document.querySelector('a[href^="mailto:"]');
-  if (!link) return;
-  var email = link.getAttribute("href").replace("mailto:", "");
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(email);
-  }
+function copyEmail(item) {
+  const link = document.querySelector('a[href^="mailto:"]');
+  const email = link?.getAttribute("href")?.replace("mailto:", "") ?? "";
+  const label = item.querySelector("span");
+  const original = label.textContent;
+
+  navigator.clipboard?.writeText(email).catch(() => {});
+  label.textContent = item.dataset.copied || original;
+  setTimeout(() => {
+    label.textContent = original;
+  }, 1200);
+}
+
+function openPalette() {
+  palette.showModal();
+  paletteInput.value = "";
+  filterPalette();
+  paletteInput.focus();
 }
 
 function runAction(item) {
-  if (!item) return;
-  var action = item.getAttribute("data-action");
+  const action = item?.dataset.action;
 
   if (action === "navigate") {
-    var href = item.getAttribute("data-href");
-    if (href) window.location.href = href;
-    return;
-  }
-
-  if (action === "theme") {
+    window.location.href = item.dataset.href;
+  } else if (action === "theme") {
+    palette.close();
     document.querySelector(".js-theme-toggle").click();
+  } else if (action === "copy") {
+    copyEmail(item);
+  } else if (action === "print") {
     palette.close();
-    return;
-  }
-
-  if (action === "copy") {
-    copyEmail();
-    var label = item.querySelector("span");
-    var original = label.textContent;
-    label.textContent = item.getAttribute("data-copied") || label.textContent;
-    window.setTimeout(function () { label.textContent = original; }, 1200);
-    return;
-  }
-
-  if (action === "print") {
-    palette.close();
-    window.location.href = (document.documentElement.lang === "en" ? "/en/cv/" : "/cv/");
-    window.setTimeout(function () { window.print(); }, 600);
+    const isEnglish = root.lang === "en";
+    window.location.href = `${isEnglish ? "/en/cv/" : "/cv/"}?print`;
   }
 }
 
-if (palette && paletteInput) {
-  document.querySelectorAll(".js-palette-open").forEach(function (button) {
-    button.addEventListener("click", function () {
-      palette.showModal();
-      paletteInput.value = "";
-      filterPalette();
-      paletteInput.focus();
-    });
+/* Печать резюме: палитра ведёт на /cv/?print, страница сама вызывает диалог. */
+if (new URLSearchParams(window.location.search).has("print")) {
+  window.addEventListener("load", () => window.print());
+}
+
+if (palette) {
+  document.querySelectorAll(".js-palette-open").forEach((button) => {
+    button.addEventListener("click", openPalette);
   });
 
   paletteInput.addEventListener("input", filterPalette);
 
-  palette.addEventListener("keydown", function (event) {
-    var items = visibleItems();
+  palette.addEventListener("keydown", (event) => {
+    const items = visibleItems();
 
     if (event.key === "ArrowDown") {
       event.preventDefault();
@@ -172,18 +173,14 @@ if (palette && paletteInput) {
     }
   });
 
-  paletteItems.forEach(function (item) {
-    item.addEventListener("click", function () { runAction(item); });
+  paletteItems.forEach((item) => {
+    item.addEventListener("click", () => runAction(item));
   });
 
-  document.addEventListener("keydown", function (event) {
+  document.addEventListener("keydown", (event) => {
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
       event.preventDefault();
-      if (palette.open) { palette.close(); return; }
-      palette.showModal();
-      paletteInput.value = "";
-      filterPalette();
-      paletteInput.focus();
+      palette.open ? palette.close() : openPalette();
     }
   });
 }
