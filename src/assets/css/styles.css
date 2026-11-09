@@ -1,5 +1,16 @@
 @layer reset, tokens, base, layout, blocks, utilities;
 
+/* Межстраничные переходы: Chrome — плавно, остальные — мгновенно */
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
 /* ---------------------------------------------------------------- fonts */
 
 @font-face {
@@ -207,6 +218,11 @@
 
   ::selection {
     background: color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+
+  :target,
+  [id] {
+    scroll-margin-top: 5rem;
   }
 
   :focus-visible {
