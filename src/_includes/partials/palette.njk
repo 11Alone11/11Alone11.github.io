@@ -1,0 +1,49 @@
+{%- set t = i18n[lang or 'ru'] %}
+{%- set root = '/en' if lang == 'en' else '' %}
+<dialog class="palette js-palette" aria-label="{{ t.palette }}">
+  <div class="palette__field">
+    <svg class="palette__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <circle cx="7" cy="7" r="4.4" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M10.4 10.4 14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+    <input class="palette__input js-palette-input" type="search" placeholder="{{ t.palette_placeholder }}" autocomplete="off" spellcheck="false">
+    <kbd class="palette__esc">Esc</kbd>
+  </div>
+
+  <div class="palette__list js-palette-list">
+    <p class="palette__group">{{ t.palette_group_go }}</p>
+    <button class="palette__item" type="button" data-action="navigate" data-href="{{ root }}/">
+      <span>{{ 'Home' if lang == 'en' else 'Главная' }}</span><span class="palette__hint">{{ root }}/</span>
+    </button>
+    <button class="palette__item" type="button" data-action="navigate" data-href="{{ root }}/work/">
+      <span>{{ 'Work' if lang == 'en' else 'Работы' }}</span><span class="palette__hint">{{ root }}/work/</span>
+    </button>
+    <button class="palette__item" type="button" data-action="navigate" data-href="{{ root }}/cv/">
+      <span>{{ 'CV' if lang == 'en' else 'Резюме' }}</span><span class="palette__hint">{{ root }}/cv/</span>
+    </button>
+    <button class="palette__item" type="button" data-action="navigate" data-href="{{ root }}/stack/">
+      <span>{{ 'Stack' if lang == 'en' else 'Стек' }}</span><span class="palette__hint">{{ root }}/stack/</span>
+    </button>
+
+    <p class="palette__group">{{ t.palette_group_do }}</p>
+    <button class="palette__item" type="button" data-action="theme">
+      <span>{{ t.palette_theme }}</span><span class="palette__hint">T</span>
+    </button>
+    <button class="palette__item" type="button" data-action="copy" data-copied="{{ t.palette_copied }}">
+      <span>{{ t.palette_copy }}</span><span class="palette__hint">{{ site.email }}</span>
+    </button>
+    <button class="palette__item" type="button" data-action="print">
+      <span>{{ t.palette_print }}</span><span class="palette__hint">Ctrl P</span>
+    </button>
+
+    <p class="palette__group">{{ t.palette_group_links }}</p>
+    <button class="palette__item" type="button" data-action="navigate" data-href="{{ site.github }}">
+      <span>GitHub</span><span class="palette__hint">↗</span>
+    </button>
+    <button class="palette__item" type="button" data-action="navigate" data-href="{{ site.telegram }}">
+      <span>Telegram</span><span class="palette__hint">↗</span>
+    </button>
+  </div>
+
+  <p class="palette__footer">{{ t.palette_hint }}</p>
+</dialog>

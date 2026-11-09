@@ -1,4 +1,14 @@
 ru:
+  palette: Команды
+  palette_placeholder: Куда перейти или что сделать
+  palette_group_go: Перейти
+  palette_group_do: Действия
+  palette_group_links: Ссылки
+  palette_theme: Сменить тему
+  palette_copy: Скопировать почту
+  palette_print: Распечатать резюме
+  palette_copied: Скопировано
+  palette_hint: Enter — выполнить, Esc — закрыть
   skip: Перейти к содержанию
   theme: Переключить тему
   nav_label: Основная навигация
@@ -23,6 +33,16 @@ ru:
   compare_hint: Сдвиньте ползунок
 
 en:
+  palette: Commands
+  palette_placeholder: Where to go, what to do
+  palette_group_go: Go to
+  palette_group_do: Actions
+  palette_group_links: Links
+  palette_theme: Toggle theme
+  palette_copy: Copy email
+  palette_print: Print CV
+  palette_copied: Copied
+  palette_hint: Enter to run, Esc to close
   skip: Skip to content
   theme: Toggle theme
   nav_label: Main navigation
