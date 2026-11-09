@@ -1,0 +1,63 @@
+{%- set isEn = lang == "en" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ site.name }}",
+  "alternateName": "Anton Stasiuk",
+  "url": "{{ site.url }}",
+  "jobTitle": "{{ 'Frontend Developer' if isEn else 'Frontend-разработчик' }}",
+  "email": "mailto:{{ site.email }}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "{{ 'Minsk' if isEn else 'Минск' }}",
+    "addressCountry": "BY"
+  },
+  "sameAs": ["{{ site.github }}", "{{ site.telegram }}"],
+  "knowsAbout": ["TypeScript", "JavaScript", "Vue 3", "Nuxt", "React", "Redux Toolkit", "TanStack Query", "Pinia", "HTML", "CSS", "SEO", "Core Web Vitals"]
+}
+</script>
+{%- if page.url == "/cv/" or page.url == "/en/cv/" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": "{{ site.url }}{{ page.url }}",
+  "inLanguage": "{{ 'en' if isEn else 'ru' }}",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "{{ site.name }}",
+    "jobTitle": "{{ 'Frontend Developer' if isEn else 'Frontend-разработчик' }}",
+    "email": "mailto:{{ site.email }}"
+  }
+}
+</script>
+{%- endif %}
+{%- if caseId %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "{{ 'Home' if isEn else 'Главная' }}",
+      "item": "{{ site.url }}{{ '/en/' if isEn else '/' }}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ 'Work' if isEn else 'Работы' }}",
+      "item": "{{ site.url }}{{ '/en/work/' if isEn else '/work/' }}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ (en.cases[caseId].title if isEn else cases[caseId].title) }}",
+      "item": "{{ site.url }}{{ page.url }}"
+    }
+  ]
+}
+</script>
+{%- endif %}
