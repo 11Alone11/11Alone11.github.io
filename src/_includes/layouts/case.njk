@@ -59,6 +59,9 @@ layout: layouts/base.njk
             {% if m.before %}<span class="metric__before">{{ m.before }}</span>
             <span class="metric__arrow" aria-hidden="true">→</span>{% endif %}
             <span class="metric__after">{{ m.after }}</span>
+            {% if m.source %}
+            <button class="footnote" type="button" popovertarget="fn-{{ c.slug }}-{{ loop.index }}" aria-label="Источник данных">{{ loop.index }}</button>
+            {% endif %}
           </dd>
           <dd class="metric__method">{{ m.method }}</dd>
         </div>
@@ -66,6 +69,19 @@ layout: layouts/base.njk
       </dl>
       {% endif %}
     </section>
+
+    {% if c.compare %}
+    <section class="case__section">
+      <h2 class="case__section-title">До и после</h2>
+      <figure class="compare js-compare">
+        <img class="compare__img" src="{{ c.compare.after }}" alt="{{ c.compare.after_alt }}" width="1440" height="900" loading="lazy" decoding="async">
+        <img class="compare__img compare__img--before" src="{{ c.compare.before }}" alt="{{ c.compare.before_alt }}" width="1440" height="900" loading="lazy" decoding="async">
+        <span class="compare__hint" aria-hidden="true">Сдвиньте ползунок</span>
+        <input class="compare__range" type="range" min="0" max="100" value="50" step="1" aria-label="Сравнение: до и после редизайна">
+      </figure>
+      <figcaption class="artifact__caption">{{ c.compare.caption }}</figcaption>
+    </section>
+    {% endif %}
 
     <section class="case__section">
       <h2 class="case__section-title">Артефакты</h2>
@@ -85,5 +101,11 @@ layout: layouts/base.njk
         {% for s in c.sources %}<li class="case__list-item">{{ s }}</li>{% endfor %}
       </ul>
     </section>
+
+    {% for m in c.metrics %}{% if m.source %}
+    <div class="footnote-popover" id="fn-{{ c.slug }}-{{ loop.index }}" popover>
+      <p>{{ m.label }}: {{ m.source }}</p>
+    </div>
+    {% endif %}{% endfor %}
   </div>
 </article>

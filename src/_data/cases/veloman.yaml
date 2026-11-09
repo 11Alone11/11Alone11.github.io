@@ -20,7 +20,7 @@ context: >-
 constraints:
   - Фронтенд-разработчик один — весь интерфейс на одном человеке.
   - Макеты в Figma с требованием pixel-perfect.
-  - Нужен SSR: каталог должен индексироваться поисковиками.
+  - "Нужен SSR: каталог должен индексироваться поисковиками."
 decisions:
   - title: Корзина и избранное на Pinia с синхронизацией в localStorage и cookies
     options:
@@ -61,15 +61,13 @@ metrics:
     after: не сохранились
     method: проект сдан без публичных замеров
 no_metrics: true
-artifacts:
-  - src: /img/cases/veloman/before.png
-    orientation: landscape
-    caption: До редизайна — старый сайт
-    source: заглушка
-  - src: /img/cases/veloman/after.png
-    orientation: landscape
-    caption: После редизайна
-    source: заглушка
+compare:
+  before: /img/cases/veloman/before.png
+  after: /img/cases/veloman/after.png
+  before_alt: Главная veloman.by до редизайна
+  after_alt: Главная veloman.by после редизайна
+  caption: Слева — старый сайт, справа — новая версия. Заглушки до замены на реальные скриншоты.
+artifacts: []
 retro: TODO
 sources:
   - Резюме, ноябрь 2026

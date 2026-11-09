@@ -1,10 +1,12 @@
 <footer class="site-footer">
   <div class="l-container site-footer__inner">
     <p>© {{ site.year }} {{ site.name }}</p>
+    <p class="site-footer__budget js-budget" aria-live="polite"></p>
     <ul class="site-footer__links">
       <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
       <li><a href="{{ site.telegram }}" rel="noopener">Telegram</a></li>
       <li><a href="{{ site.github }}" rel="noopener">GitHub</a></li>
+      <li><button class="anatomy-toggle js-anatomy" type="button" aria-pressed="false">Анатомия страницы</button></li>
     </ul>
   </div>
 </footer>

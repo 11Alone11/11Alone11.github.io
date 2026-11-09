@@ -27,3 +27,41 @@ function toggleTheme() {
 }
 
 document.querySelector(".js-theme-toggle")?.addEventListener("click", toggleTheme);
+
+/* Сравнение «до / после» */
+document.querySelectorAll(".js-compare").forEach(function (block) {
+  var range = block.querySelector(".compare__range");
+  if (!range) return;
+  range.addEventListener("input", function () {
+    block.style.setProperty("--pos", range.value + "%");
+  });
+});
+
+/* Анатомия страницы */
+var anatomyButton = document.querySelector(".js-anatomy");
+
+if (anatomyButton) {
+  anatomyButton.addEventListener("click", function () {
+    var enabled = document.documentElement.classList.toggle("is-anatomy");
+    anatomyButton.setAttribute("aria-pressed", String(enabled));
+  });
+}
+
+/* Вес страницы: сколько реально пришло по сети */
+var budgetField = document.querySelector(".js-budget");
+
+if (budgetField && window.performance && performance.getEntriesByType) {
+  window.addEventListener("load", function () {
+    var nav = performance.getEntriesByType("navigation")[0];
+    var resources = performance.getEntriesByType("resource");
+    var total = (nav ? nav.transferSize : 0);
+
+    resources.forEach(function (entry) {
+      total += entry.transferSize || 0;
+    });
+
+    if (total > 0) {
+      budgetField.textContent = "эта страница: " + Math.round(total / 1024) + " КБ";
+    }
+  });
+}
