@@ -1,0 +1,22 @@
+---
+layout: layouts/base.njk
+lang: ru
+title: "Страница не найдена — Антон Стасюк"
+description: "Такой страницы нет."
+permalink: /404.html
+---
+<section class="hero">
+  <div class="l-container">
+    <p class="hero__kicker">Ошибка 404</p>
+    <h1 class="hero__title">Такой страницы нет</h1>
+    <p class="hero__lead">
+      Возможно, ссылка устарела. Вот что точно существует: главная с работами,
+      резюме и контакты.
+    </p>
+    <ul class="contact-list">
+      <li><a href="/">На главную</a></li>
+      <li><a href="/cv/">Резюме</a></li>
+      <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+    </ul>
+  </div>
+</section>

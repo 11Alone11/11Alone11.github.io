@@ -1,0 +1,91 @@
+---
+layout: layouts/base.njk
+lang: ru
+title: "Стек и решения — как сделан этот сайт"
+description: "Статический сайт без фреймворка: 11ty, чистый CSS по БЭМ, один файл скриптов. Бюджеты, доступность, вес страницы."
+---
+
+<section class="l-section">
+  <div class="l-container">
+    <p class="hero__kicker">Стек и решения</p>
+    <h1 class="page-title">Как сделан этот сайт</h1>
+    <p class="page-lead">
+      Здесь нет фреймворка, сборщика и минификации. Это не принципиальная позиция
+      против инструментов, а попытка показать, что можно обойтись меньшим.
+    </p>
+  </div>
+</section>
+
+<section class="l-section">
+  <div class="l-container case__body case__body--flush">
+    <section class="case__section">
+      <h2 class="case__section-title">Из чего собрано</h2>
+      <dl class="decision__facts">
+        <dt>Шаблоны</dt>
+        <dd>11ty 3 — только склейка HTML. На выходе статические файлы, никакого сервера.</dd>
+        <dt>Стили</dt>
+        <dd>Один <code>styles.css</code>: <code>@layer</code>, кастомные свойства, БЭМ. Без препроцессора.</dd>
+        <dt>Скрипты</dt>
+        <dd>Один <code>main.js</code> на 0,9 КБ. Тема оформления и то немногое, что требует JS.</dd>
+        <dt>Шрифты</dt>
+        <dd>Literata для заголовков, Inter для текста. Подмножества только latin и cyrillic, 100 КБ на всё.</dd>
+        <dt>Хостинг</dt>
+        <dd>GitHub Pages. Push в main собирает и публикует сайт.</dd>
+      </dl>
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Почему без фреймворка</h2>
+      <p class="prose">
+        Сайту не нужны ни реактивность, ни виртуальный DOM, ни клиентский роутинг:
+        это набор текстовых страниц. Фреймворк здесь добавил бы десятки килобайт
+        JavaScript к странице, которая открывается за доли секунды.
+      </p>
+      <p class="prose">
+        Фреймворки остаются там, где они оправданы — в рабочих проектах. Здесь же
+        проверялась обратная гипотеза: можно ли сделать качественный интерфейс
+        на платформе как она есть.
+      </p>
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Бюджеты</h2>
+      <dl class="metric-list">
+        <div class="metric">
+          <dt class="metric__label">HTML страницы</dt>
+          <dd class="metric__value"><span class="metric__after">2,3 КБ</span></dd>
+          <dd class="metric__method">gzip, планка — 6 КБ</dd>
+        </div>
+        <div class="metric">
+          <dt class="metric__label">CSS</dt>
+          <dd class="metric__value"><span class="metric__after">3,8 КБ</span></dd>
+          <dd class="metric__method">gzip, планка — 8 КБ</dd>
+        </div>
+        <div class="metric">
+          <dt class="metric__label">JS в первом рендере</dt>
+          <dd class="metric__value"><span class="metric__after">0 КБ</span></dd>
+          <dd class="metric__method">скрипты только с defer, ни один не блокирует отрисовку</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Доступность</h2>
+      <ul class="case__list">
+        <li class="case__list-item">Семантическая разметка: <code>main</code>, <code>section</code> с заголовками, <code>nav</code> с подписью, <code>article</code> для кейсов.</li>
+        <li class="case__list-item">Скип-ссылка и видимый фокус на всех интерактивных элементах.</li>
+        <li class="case__list-item">Контраст текста не ниже 4,5:1 в обеих темах.</li>
+        <li class="case__list-item">Анимации отключаются при <code>prefers-reduced-motion</code>.</li>
+        <li class="case__list-item">Тема следует системной настройке, если пользователь не выбрал вручную.</li>
+      </ul>
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Что не сделано</h2>
+      <p class="prose">
+        Скриншоты в кейсах пока заменены заглушками — настоящие появятся позже.
+        Раздел с заметками сознательно не заводился: пустой блог хуже, чем его отсутствие.
+      </p>
+    </section>
+  </div>
+</section>

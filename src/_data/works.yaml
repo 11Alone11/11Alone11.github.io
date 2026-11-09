@@ -1,0 +1,15 @@
+- slug: abw
+  title: "abw.by"
+  subtitle: "Маркетплейс автомобилей"
+  period: "2024 — 2025"
+  desc: "Миграция на TypeScript и Nuxt 4, фильтры с состоянием в URL, LCP с 2,4 до 1,5 с."
+- slug: beerzhevik
+  title: "БИРЖЕВИК"
+  subtitle: "PWA с ценами в реальном времени"
+  period: "2024"
+  desc: "Мобильный интерфейс для бара: обновление цен по WebSocket, роли, аналитика."
+- slug: veloman
+  title: "veloman.by"
+  subtitle: "Интернет-магазин велосипедов"
+  period: "2023 — 2024"
+  desc: "Полный редизайн с нуля: единственный фронтенд-разработчик, SSR, SEO, пиксель-перфект."

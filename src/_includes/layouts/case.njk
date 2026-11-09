@@ -1,0 +1,89 @@
+---
+layout: layouts/base.njk
+---
+{% set c = cases[caseId] %}
+<article class="case">
+  <header class="case__header l-container">
+    <a class="back-link" href="/work/">← Все работы</a>
+    <p class="case__kicker">{{ c.period }} · {{ c.role }}</p>
+    <h1 class="case__title">{{ c.title }}</h1>
+    <p class="case__subtitle">{{ c.subtitle }}</p>
+    <p class="case__summary">{{ c.summary }}</p>
+    <p class="case__stack">
+      {% for tech in c.stack %}<span>{{ tech }}</span>{% endfor %}
+    </p>
+  </header>
+
+  <div class="l-container case__body">
+    <section class="case__section">
+      <h2 class="case__section-title">Контекст</h2>
+      <p class="prose">{{ c.context }}</p>
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Ограничения</h2>
+      <ul class="case__list">
+        {% for item in c.constraints %}<li class="case__list-item">{{ item }}</li>{% endfor %}
+      </ul>
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Решения</h2>
+      {% for d in c.decisions %}
+      <article class="decision">
+        <h3 class="decision__title">{{ d.title }}</h3>
+        <dl class="decision__facts">
+          <dt>Варианты</dt>
+          <dd>{{ d.options | join(" · ") }}</dd>
+          <dt>Выбрал</dt>
+          <dd>{{ d.choice }}</dd>
+          <dt>Почему</dt>
+          <dd>{{ d.why }}</dd>
+          <dt>Цена</dt>
+          <dd>{{ d.cost }}</dd>
+        </dl>
+      </article>
+      {% endfor %}
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Результат</h2>
+      {% if c.no_metrics %}
+      <p class="prose">Числовых метрик не сохранилось: {{ c.metrics[0].method }}.</p>
+      {% else %}
+      <dl class="metric-list">
+        {% for m in c.metrics %}
+        <div class="metric">
+          <dt class="metric__label">{{ m.label }}</dt>
+          <dd class="metric__value">
+            {% if m.before %}<span class="metric__before">{{ m.before }}</span>
+            <span class="metric__arrow" aria-hidden="true">→</span>{% endif %}
+            <span class="metric__after">{{ m.after }}</span>
+          </dd>
+          <dd class="metric__method">{{ m.method }}</dd>
+        </div>
+        {% endfor %}
+      </dl>
+      {% endif %}
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Артефакты</h2>
+      <div class="artifact-grid">
+        {% for a in c.artifacts %}
+        <figure class="artifact artifact--{{ a.orientation }}">
+          <img class="artifact__image" src="{{ a.src }}" alt="{{ a.caption }}" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption class="artifact__caption">{{ a.caption }}</figcaption>
+        </figure>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Источники</h2>
+      <ul class="case__list case__list--plain">
+        {% for s in c.sources %}<li class="case__list-item">{{ s }}</li>{% endfor %}
+      </ul>
+    </section>
+  </div>
+</article>

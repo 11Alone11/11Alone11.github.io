@@ -1,0 +1,115 @@
+---
+layout: layouts/base.njk
+lang: ru
+title: "Резюме — Антон Стасюк, Frontend-разработчик"
+description: "Опыт, стек и образование. Три года коммерческой разработки: Vue, Nuxt, React, TypeScript."
+---
+
+<section class="l-section">
+  <div class="l-container">
+    <p class="hero__kicker">Резюме</p>
+    <h1 class="page-title">Антон Стасюк</h1>
+    <p class="page-lead">
+      Frontend-разработчик. Vue 3, Nuxt, React, TypeScript. Минск, удалённо или гибрид.
+    </p>
+    <ul class="contact-list">
+      <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+      <li><a href="{{ site.telegram }}" rel="noopener">@AntonStasiuk</a></li>
+      <li><a href="{{ site.github }}" rel="noopener">github.com/11Alone11</a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="l-section">
+  <div class="l-container">
+    <div class="section-head">
+      <span class="section-head__index">01</span>
+      <h2 class="section-head__title">Опыт</h2>
+    </div>
+
+    <div class="cv-block">
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2025-11">ноябрь 2025</time> — <time datetime="2026-10">октябрь 2026</time></p>
+        <div>
+          <h3 class="cv-entry__title">IT-подразделение МВД</h3>
+          <p class="cv-entry__role">Frontend-разработчик · React, TypeScript, Redux Toolkit, TanStack Query, MUI, Mantine</p>
+          <p class="cv-entry__note">Подробности проекта не раскрываются.</p>
+        </div>
+      </article>
+
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2024-11">ноябрь 2024</time> — <time datetime="2025-10">октябрь 2025</time></p>
+        <div>
+          <h3 class="cv-entry__title">abw.by</h3>
+          <p class="cv-entry__role">Frontend-разработчик · Vue 3, Nuxt, TypeScript, Pinia</p>
+          <p class="cv-entry__note">Миграция с JavaScript на TypeScript и с Nuxt 3 на Nuxt 4, фильтры с состоянием в URL, LCP с 2,4 до 1,5 с. <a href="/work/abw/">Кейс →</a></p>
+        </div>
+      </article>
+
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2024-03">март 2024</time> — <time datetime="2024-10">октябрь 2024</time></p>
+        <div>
+          <h3 class="cv-entry__title">БИРЖЕВИК</h3>
+          <p class="cv-entry__role">Frontend-разработчик · Vue 3, Nuxt 3, TypeScript, WebSocket</p>
+          <p class="cv-entry__note">PWA для бара: обновление цен в реальном времени, JWT-авторизация, три роли. <a href="/work/beerzhevik/">Кейс →</a></p>
+        </div>
+      </article>
+
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2023-11">ноябрь 2023</time> — <time datetime="2024-03">март 2024</time></p>
+        <div>
+          <h3 class="cv-entry__title">veloman.by</h3>
+          <p class="cv-entry__role">Frontend-разработчик · Vue 3, Nuxt 3, TypeScript, Pinia, Sass</p>
+          <p class="cv-entry__note">Единственный фронтенд-разработчик: полный редизайн магазина с нуля, SSR, SEO. <a href="/work/veloman/">Кейс →</a></p>
+        </div>
+      </article>
+
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2023-05">май 2023</time> — <time datetime="2023-08">август 2023</time></p>
+        <div>
+          <h3 class="cv-entry__title">ProEdu</h3>
+          <p class="cv-entry__role">Frontend-разработчик · JavaScript, Telegram WebApps API, Sass</p>
+          <p class="cv-entry__note">Telegram Mini App: задания, квесты и награды, вёрстка под WebView.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="l-section">
+  <div class="l-container">
+    <div class="section-head">
+      <span class="section-head__index">02</span>
+      <h2 class="section-head__title">Стек</h2>
+    </div>
+    <ul class="tag-list">
+      {% for tag in ["JavaScript", "TypeScript", "Vue 3", "Nuxt", "React", "Redux Toolkit", "TanStack Query", "Pinia", "HTML", "CSS / SCSS", "Vite", "Vitest", "Docker", "Git", "SonarQube", "SEO", "PWA"] %}
+      <li class="tag">{{ tag }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="l-section">
+  <div class="l-container">
+    <div class="section-head">
+      <span class="section-head__index">03</span>
+      <h2 class="section-head__title">Образование и языки</h2>
+    </div>
+    <div class="cv-block">
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2025">2025</time></p>
+        <div>
+          <h3 class="cv-entry__title">БГУИР, Минск</h3>
+          <p class="cv-entry__role">Автоматизированные системы обработки информации, ФИТУ</p>
+        </div>
+      </article>
+      <article class="cv-entry">
+        <p class="cv-entry__period">Языки</p>
+        <div>
+          <p class="cv-entry__role">Русский — родной · Английский — B1, читаю документацию и переписку</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
