@@ -1,10 +1,11 @@
 slug: beerzhevik
-lang: ru
 title: БИРЖЕВИК
 subtitle: PWA с ценами в реальном времени
 period: март — октябрь 2024
-period_html: "2024-03/2024-10"
 role: Frontend-разработчик
+url: "https://beerzhevik.ru"
+cover: "/img/cases/beerzhevik/cover.webp"
+cover_alt: "БИРЖЕВИК: до и после — цены, категории и живая биржа"
 stack:
   - TypeScript
   - Vue 3
@@ -62,15 +63,3 @@ metrics:
     after: не сохранились
     method: внутренние замеры проекта не публиковались
 no_metrics: true
-artifacts:
-  - src: /img/cases/beerzhevik/before.webp
-    orientation: portrait
-    caption: До работы — экран без обновления цен
-    source: скриншот владельца
-  - src: /img/cases/beerzhevik/after.webp
-    orientation: portrait
-    caption: После — живая биржа, падения дня, категории
-    source: скриншот владельца
-retro: TODO
-sources:
-  - Резюме, ноябрь 2026

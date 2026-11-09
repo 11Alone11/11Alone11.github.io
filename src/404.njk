@@ -1,22 +1,21 @@
 ---
 layout: layouts/base.njk
-lang: ru
 title: "Страница не найдена — Антон Стасюк"
-description: "Страница не найдена. Ссылки на главную, работы и резюме — на этой странице."
+description: "Такой страницы нет. Все кейсы, опыт и контакты — на главной."
 permalink: /404.html
 ---
-<section class="hero">
-  <div class="l-container">
-    <p class="hero__kicker">Ошибка 404</p>
-    <h1 class="hero__title">Такой страницы нет</h1>
-    <p class="hero__lead">
-      Возможно, ссылка устарела. Вот что точно существует: главная с работами,
-      резюме и контакты.
+<section class="not-found">
+  <div class="l-container not-found__inner">
+    <p class="kicker">Ошибка 404</p>
+    <h1 class="not-found__title">Такой страницы нет</h1>
+    <p class="not-found__lead">
+      Возможно, ссылка устарела. Всё, что нужно, теперь на одной странице:
+      работы, опыт и контакты.
     </p>
-    <ul class="contact-list">
-      <li><a href="/">На главную</a></li>
-      <li><a href="/cv/">Резюме</a></li>
-      <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-    </ul>
+    <div class="not-found__actions">
+      <a class="btn" href="/">На главную</a>
+      <a class="btn btn--ghost" href="/#work">Смотреть работы</a>
+      <a class="btn btn--ghost" href="mailto:{{ site.email }}">Написать</a>
+    </div>
   </div>
 </section>

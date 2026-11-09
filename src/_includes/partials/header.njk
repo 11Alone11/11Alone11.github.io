@@ -1,35 +1,30 @@
-<header class="site-header">
+<header class="site-header js-header">
   <div class="l-container site-header__inner">
-    {%- set navItems = en.navigation if lang == 'en' else navigation %}
-    <a class="site-header__brand" href="{{ '/en/' if lang == 'en' else '/' }}">
-      <span class="site-header__mark" aria-hidden="true">V</span>
-      <span class="site-header__name">{{ en.site.name if lang == 'en' else site.name }}</span>
+    <a class="brand" href="#top" aria-label="Антон Стасюк — наверх">
+      <span class="brand__mark" aria-hidden="true">АС</span>
+      <span class="brand__name">Антон Стасюк</span>
     </a>
 
-    <nav class="site-nav" aria-label="{{ i18n[lang or 'ru'].nav_label }}">
-      <ul class="site-nav__list">
-        {%- for item in navItems %}
-        {%- set isCurrent = page.url == item.url or (item.url != "/" and page.url.startsWith(item.url)) %}
-        <li>
-          <a class="site-nav__link" href="{{ item.url }}"{% if isCurrent %} aria-current="page"{% endif %}>{{ item.label }}</a>
-        </li>
-        {%- endfor %}
-      </ul>
-      <a class="site-nav__link site-nav__link--lang" href="{{ altUrl or i18n[lang or 'ru'].lang_switch_url }}" hreflang="{{ 'ru' if lang == 'en' else 'en' }}" lang="{{ 'ru' if lang == 'en' else 'en' }}">{{ i18n[lang or 'ru'].lang_switch }}</a>
+    <nav class="nav" aria-label="Разделы">
+      <a class="nav__link" href="/#work">Работы</a>
+      <a class="nav__link" href="/#experience">Опыт</a>
+      <a class="nav__link" href="/#contact">Контакты</a>
     </nav>
 
-    <button class="palette-trigger js-palette-open" type="button" aria-label="{{ i18n[lang or 'ru'].palette }}">
-      <span aria-hidden="true">⌘K</span>
-    </button>
-
-    <button class="theme-toggle js-theme-toggle" type="button" aria-label="{{ i18n[lang or 'ru'].theme }}">
-      <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
-      </svg>
-      <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <circle cx="8" cy="8" r="3.1" stroke="currentColor" stroke-width="1.3"/>
-        <path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M12.95 3.05l-1.13 1.13M4.18 11.82l-1.13 1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-      </svg>
-    </button>
+    <div class="header__actions">
+      <a class="btn btn--small btn--ghost header__pdf" href="/resume.pdf" download="Anton-Stasiuk-Frontend.pdf">
+        <span class="header__pdf-full">Скачать PDF</span>
+        <span class="header__pdf-short">PDF</span>
+      </a>
+      <button class="theme-toggle js-theme-toggle" type="button" aria-label="Переключить тему">
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+        </svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="3.1" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M12.95 3.05l-1.13 1.13M4.18 11.82l-1.13 1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
   </div>
 </header>

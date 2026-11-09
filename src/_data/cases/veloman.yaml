@@ -1,10 +1,11 @@
 slug: veloman
-lang: ru
 title: veloman.by
 subtitle: Интернет-магазин велосипедов с нуля
 period: ноябрь 2023 — март 2024
-period_html: "2023-11/2024-03"
 role: Единственный frontend-разработчик
+url: "https://veloman.by"
+cover: "/img/cases/veloman/after.webp"
+cover_alt: "Главная veloman.by после редизайна"
 stack:
   - Vue 3
   - Nuxt 3
@@ -68,6 +69,3 @@ compare:
   after_alt: Главная veloman.by после редизайна
   caption: "Слева — старый сайт, справа — новая версия."
 artifacts: []
-retro: TODO
-sources:
-  - Резюме, ноябрь 2026

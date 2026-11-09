@@ -1,23 +1,34 @@
 const root = document.documentElement;
+const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------------------------------------------------------------- theme */
+
+const themeButton = document.querySelector(".js-theme-toggle");
 const THEME_KEY = "theme";
 
-/* Тема. Начальное значение выставляет инлайн-скрипт в <head>,
-   здесь — переключение с круговой заливкой из точки клика. */
+function syncThemeButton() {
+  if (!themeButton) return;
+  const isDark = root.dataset.theme === "dark";
+  themeButton.setAttribute(
+    "aria-label",
+    isDark ? "Включить светлую тему" : "Включить тёмную тему"
+  );
+}
+
 function applyTheme(theme) {
   root.dataset.theme = theme;
-
   try {
     localStorage.setItem(THEME_KEY, theme);
   } catch (error) {
-    /* приватный режим: тема просто не запомнится */
+    /* приватный режим: тема не запомнится */
   }
+  syncThemeButton();
 }
 
 function toggleTheme(event) {
   const next = root.dataset.theme === "dark" ? "light" : "dark";
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (!document.startViewTransition || reduceMotion) {
+  if (!document.startViewTransition || reduceMotion()) {
     applyTheme(next);
     return;
   }
@@ -28,159 +39,313 @@ function toggleTheme(event) {
   document.startViewTransition(() => applyTheme(next));
 }
 
-document.querySelector(".js-theme-toggle")?.addEventListener("click", toggleTheme);
+syncThemeButton();
+themeButton?.addEventListener("click", toggleTheme);
 
-/* Сравнение «до / после»: ползунок двигает границу между кадрами. */
+/* ------------------------------------------------------------- header + progress */
+
+const header = document.querySelector(".js-header");
+const progress = document.querySelector(".js-progress");
+let scrollScheduled = false;
+
+function updateScrollUi() {
+  const y = window.scrollY;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+
+  header?.classList.toggle("is-scrolled", y > 8);
+
+  if (progress) {
+    progress.style.transform = `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`;
+  }
+
+  scrollScheduled = false;
+}
+
+function requestScrollUpdate() {
+  if (scrollScheduled) return;
+  scrollScheduled = true;
+  window.requestAnimationFrame(updateScrollUi);
+}
+
+window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+window.addEventListener("resize", requestScrollUpdate);
+updateScrollUi();
+
+/* ---------------------------------------------------------------- reveal */
+
+const revealItems = [...document.querySelectorAll("[data-reveal]")];
+
+if (revealItems.length) {
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+    );
+
+    revealItems.forEach((item) => revealObserver.observe(item));
+  } else {
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+  }
+}
+
+/* ---------------------------------------------------------------- reel */
+
+for (const reel of document.querySelectorAll(".js-reel")) {
+  const slides = [...reel.querySelectorAll(".reel__slide")];
+  const dots = [...reel.querySelectorAll(".reel__dot")];
+  const stage = reel.querySelector(".reel__stage");
+  let index = Math.max(0, slides.findIndex((slide) => slide.classList.contains("is-active")));
+  let startX = null;
+  let startY = null;
+  let swiped = false;
+
+  if (!slides.length) continue;
+
+  function show(nextIndex) {
+    index = (nextIndex + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+      const active = i === index;
+      slide.classList.toggle("is-active", active);
+      slide.setAttribute("aria-hidden", String(!active));
+      slide.tabIndex = active ? 0 : -1;
+    });
+
+    dots.forEach((dot, i) => {
+      const active = i === index;
+      dot.classList.toggle("is-active", active);
+      dot.setAttribute("aria-current", active ? "true" : "false");
+    });
+  }
+
+  reel.querySelector(".js-reel-prev")?.addEventListener("click", () => show(index - 1));
+  reel.querySelector(".js-reel-next")?.addEventListener("click", () => show(index + 1));
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => show(Number(dot.dataset.goto)));
+  });
+
+  reel.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      show(index - 1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      show(index + 1);
+    }
+  });
+
+  stage?.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse") return;
+    startX = event.clientX;
+    startY = event.clientY;
+  });
+
+  stage?.addEventListener("pointerup", (event) => {
+    if (startX === null || startY === null) return;
+
+    const dx = event.clientX - startX;
+    const dy = event.clientY - startY;
+    startX = null;
+    startY = null;
+
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+
+    swiped = true;
+    window.setTimeout(() => {
+      swiped = false;
+    }, 320);
+    show(dx > 0 ? index - 1 : index + 1);
+  });
+
+  stage?.addEventListener("pointercancel", () => {
+    startX = null;
+    startY = null;
+  });
+
+  reel.addEventListener(
+    "click",
+    (event) => {
+      if (!swiped) return;
+      event.preventDefault();
+      event.stopPropagation();
+    },
+    true
+  );
+
+  show(index);
+}
+
+/* ---------------------------------------------------------------- compare */
+
 for (const block of document.querySelectorAll(".js-compare")) {
-  const range = block.querySelector(".compare__range");
+  const range = block.querySelector(".js-compare-range");
 
-  range?.addEventListener("input", () => {
-    block.style.setProperty("--pos", `${range.value}%`);
+  if (!range) continue;
+
+  const update = () => {
+    const value = Number(range.value);
+    block.style.setProperty("--pos", `${value}%`);
+    range.setAttribute(
+      "aria-valuetext",
+      `${value} процентов — слева старый сайт, справа новый`
+    );
+  };
+
+  range.addEventListener("input", update);
+  update();
+}
+
+/* ---------------------------------------------------------------- lightbox */
+
+const lightbox = document.querySelector(".js-lightbox-dialog");
+
+if (lightbox) {
+  const image = lightbox.querySelector(".js-lightbox-img");
+  const caption = lightbox.querySelector("#lightbox-caption");
+  const counter = lightbox.querySelector(".js-lightbox-counter");
+  const closeButton = lightbox.querySelector(".js-lightbox-close");
+  const prevButton = lightbox.querySelector(".js-lightbox-prev");
+  const nextButton = lightbox.querySelector(".js-lightbox-next");
+  const triggers = [...document.querySelectorAll(".js-lightbox")];
+  const groups = new Map();
+
+  let items = [];
+  let index = 0;
+  let opener = null;
+  let closing = false;
+
+  for (const trigger of triggers) {
+    const group = trigger.dataset.group || "default";
+    if (!groups.has(group)) groups.set(group, []);
+    groups.get(group).push(trigger);
+  }
+
+  function render() {
+    const item = items[index];
+    if (!item) return;
+
+    const source = item.getAttribute("href");
+    const alt = item.dataset.caption || "";
+
+    image.src = source;
+    image.alt = alt;
+    if (caption) caption.textContent = alt;
+    counter.textContent = `${index + 1} / ${items.length}`;
+
+    const many = items.length > 1;
+    if (prevButton) prevButton.hidden = !many;
+    if (nextButton) nextButton.hidden = !many;
+
+    const neighbour = items[(index + 1) % items.length];
+    if (many && neighbour && neighbour !== item) {
+      const preload = new Image();
+      preload.src = neighbour.getAttribute("href");
+    }
+  }
+
+  function open(trigger) {
+    opener = trigger;
+    items = groups.get(trigger.dataset.group || "default") || [];
+    index = Math.max(0, items.indexOf(trigger));
+    closing = false;
+    lightbox.classList.remove("is-closing");
+
+    render();
+    lightbox.showModal();
+    document.body.classList.add("is-locked");
+    closeButton?.focus();
+  }
+
+  function step(delta) {
+    if (items.length < 2) return;
+    index = (index + delta + items.length) % items.length;
+    render();
+  }
+
+  function close() {
+    if (closing || !lightbox.open) return;
+    closing = true;
+    lightbox.classList.add("is-closing");
+
+    window.setTimeout(() => {
+      lightbox.close();
+      lightbox.classList.remove("is-closing");
+      document.body.classList.remove("is-locked");
+      closing = false;
+      opener?.focus();
+    }, 190);
+  }
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      open(trigger);
+    });
+  });
+
+  closeButton?.addEventListener("click", close);
+  prevButton?.addEventListener("click", () => step(-1));
+  nextButton?.addEventListener("click", () => step(1));
+
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) close();
+  });
+
+  lightbox.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    close();
+  });
+
+  lightbox.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      step(-1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      step(1);
+    }
   });
 }
 
-/* Анатомия страницы: показывает сетку и контуры блоков. */
-const anatomyButton = document.querySelector(".js-anatomy");
+/* ---------------------------------------------------------------- print */
 
-anatomyButton?.addEventListener("click", () => {
-  const enabled = root.classList.toggle("is-anatomy");
-  anatomyButton.setAttribute("aria-pressed", String(enabled));
+document.querySelectorAll(".js-print").forEach((button) => {
+  button.addEventListener("click", () => window.print());
 });
 
-/* Вес страницы: суммарный transferSize этого открытия. */
-const budgetField = document.querySelector(".js-budget");
+/* ---------------------------------------------------------------- scrollspy */
 
-if (budgetField && performance.getEntriesByType) {
-  window.addEventListener("load", () => {
-    const [navigation] = performance.getEntriesByType("navigation");
-    const resources = performance.getEntriesByType("resource");
-    const total = resources.reduce((sum, entry) => sum + (entry.transferSize || 0), navigation?.transferSize || 0);
+const navLinks = [...document.querySelectorAll(".nav__link")];
+const sectionIds = ["work", "experience", "contact"];
+const sections = sectionIds
+  .map((id) => document.getElementById(id))
+  .filter(Boolean);
 
-    if (total > 0) {
-      const label = budgetField.dataset.label || "this page";
-      const unit = root.lang === "en" ? " KB" : " КБ";
-      budgetField.textContent = `${label}: ${Math.round(total / 1024)}${unit}`;
-    }
-  });
-}
+if (navLinks.length && sections.length && "IntersectionObserver" in window) {
+  const spy = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        navLinks.forEach((link) => {
+          const href = link.getAttribute("href");
+          const active = href === `#${entry.target.id}` || href === `/#${entry.target.id}`;
+          if (active) {
+            link.setAttribute("aria-current", "true");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      }
+    },
+    { rootMargin: "-35% 0px -55% 0px", threshold: 0 }
+  );
 
-/* Командная палитра. */
-const palette = document.querySelector(".js-palette");
-const paletteInput = document.querySelector(".js-palette-input");
-const paletteItems = palette ? [...palette.querySelectorAll(".palette__item")] : [];
-let activeIndex = 0;
-
-function visibleItems() {
-  return paletteItems.filter((item) => !item.hidden);
-}
-
-function selectItem(index) {
-  const items = visibleItems();
-
-  if (!items.length) {
-    return;
-  }
-
-  activeIndex = (index + items.length) % items.length;
-  paletteItems.forEach((item) => item.setAttribute("aria-selected", "false"));
-  items[activeIndex].setAttribute("aria-selected", "true");
-  items[activeIndex].scrollIntoView({ block: "nearest" });
-}
-
-function filterPalette() {
-  const query = paletteInput.value.trim().toLowerCase();
-
-  paletteItems.forEach((item) => {
-    item.hidden = query !== "" && !item.textContent.toLowerCase().includes(query);
-  });
-
-  palette.querySelectorAll(".palette__group").forEach((group) => {
-    let sibling = group.nextElementSibling;
-    let hasVisible = false;
-
-    while (sibling && !sibling.classList.contains("palette__group")) {
-      hasVisible ||= !sibling.hidden;
-      sibling = sibling.nextElementSibling;
-    }
-
-    group.hidden = !hasVisible;
-  });
-
-  selectItem(0);
-}
-
-function copyEmail(item) {
-  const link = document.querySelector('a[href^="mailto:"]');
-  const email = link?.getAttribute("href")?.replace("mailto:", "") ?? "";
-  const label = item.querySelector("span");
-  const original = label.textContent;
-
-  navigator.clipboard?.writeText(email).catch(() => {});
-  label.textContent = item.dataset.copied || original;
-  setTimeout(() => {
-    label.textContent = original;
-  }, 1200);
-}
-
-function openPalette() {
-  palette.showModal();
-  paletteInput.value = "";
-  filterPalette();
-  paletteInput.focus();
-}
-
-function runAction(item) {
-  const action = item?.dataset.action;
-
-  if (action === "navigate") {
-    window.location.href = item.dataset.href;
-  } else if (action === "theme") {
-    palette.close();
-    document.querySelector(".js-theme-toggle").click();
-  } else if (action === "copy") {
-    copyEmail(item);
-  } else if (action === "print") {
-    palette.close();
-    const isEnglish = root.lang === "en";
-    window.location.href = `${isEnglish ? "/en/cv/" : "/cv/"}?print`;
-  }
-}
-
-/* Печать резюме: палитра ведёт на /cv/?print, страница сама вызывает диалог. */
-if (new URLSearchParams(window.location.search).has("print")) {
-  window.addEventListener("load", () => window.print());
-}
-
-if (palette) {
-  document.querySelectorAll(".js-palette-open").forEach((button) => {
-    button.addEventListener("click", openPalette);
-  });
-
-  paletteInput.addEventListener("input", filterPalette);
-
-  palette.addEventListener("keydown", (event) => {
-    const items = visibleItems();
-
-    if (event.key === "ArrowDown") {
-      event.preventDefault();
-      selectItem(activeIndex + 1);
-    } else if (event.key === "ArrowUp") {
-      event.preventDefault();
-      selectItem(activeIndex - 1);
-    } else if (event.key === "Enter") {
-      event.preventDefault();
-      runAction(items[activeIndex]);
-    }
-  });
-
-  paletteItems.forEach((item) => {
-    item.addEventListener("click", () => runAction(item));
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-      event.preventDefault();
-      palette.open ? palette.close() : openPalette();
-    }
-  });
+  sections.forEach((section) => spy.observe(section));
 }

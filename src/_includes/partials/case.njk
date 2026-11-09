@@ -1,0 +1,152 @@
+<article class="case" id="{{ c.slug }}" aria-labelledby="case-{{ c.slug }}-title">
+  <header class="case__head" data-reveal>
+    <div class="case__head-main">
+      <p class="case__index" aria-hidden="true">{% if caseIndex < 10 %}0{% endif %}{{ caseIndex }}</p>
+      <div class="case__heading">
+        <h3 class="case__title" id="case-{{ c.slug }}-title">{{ c.title }}</h3>
+        <p class="case__subtitle">{{ c.subtitle }}</p>
+      </div>
+    </div>
+    <div class="case__head-side">
+      <p class="case__period">{{ c.period }} · {{ c.role }}</p>
+      <a class="case__live" href="{{ c.url }}" target="_blank" rel="noopener">
+        Открыть сайт <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </header>
+
+  <a class="case__cover js-lightbox" href="{{ c.cover }}" target="_blank" rel="noopener"
+     data-group="{{ c.slug }}" data-caption="{{ c.cover_alt }}"
+     aria-label="Открыть скриншот: {{ c.cover_alt }}">
+    <img src="{{ c.cover }}" alt=""
+         srcset="{{ c.cover | replace('.webp', '-720.webp') }} 720w, {{ c.cover | replace('.webp', '-1080.webp') }} 1080w, {{ c.cover }} 1440w"
+         sizes="(max-width: 900px) 90vw, 1060px"
+         width="1440" height="810"
+         loading="{{ 'eager' if caseIndex == 1 else 'lazy' }}"
+         fetchpriority="{{ 'high' if caseIndex == 1 else 'auto' }}"
+         decoding="async">
+    <span class="case__cover-hint" aria-hidden="true">Открыть скриншот</span>
+  </a>
+
+  <div class="case__grid">
+    <div class="case__story">
+      <p class="case__summary">{{ c.summary }}</p>
+      <p class="case__context">{{ c.context }}</p>
+      <ul class="chips" aria-label="Ограничения проекта">
+        {% for item in c.constraints %}
+        <li class="chip">{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="case__aside">
+      <dl class="case__facts">
+        <div><dt>Роль</dt><dd>{{ c.role }}</dd></div>
+        <div><dt>Период</dt><dd>{{ c.period }}</dd></div>
+        <div><dt>Стек</dt><dd>{{ c.stack | join(" · ") }}</dd></div>
+      </dl>
+
+      <h4 class="case__aside-title">Результат</h4>
+      {% if c.no_metrics %}
+      <p class="case__note">
+        Публичных метрик нет: {{ c.metrics[0].method }}.
+        Ниже — артефакты, по которым можно судить о результате.
+      </p>
+      {% else %}
+      <dl class="case__metrics">
+        {% for m in c.metrics %}
+        <div class="metric">
+          <dt>{{ m.label }}</dt>
+          <dd class="metric__value">
+            {% if m.before %}<span class="metric__before">{{ m.before }}</span>
+            <span class="metric__arrow" aria-hidden="true">→</span>{% endif %}
+            <strong>{{ m.after }}</strong>
+          </dd>
+          <dd class="metric__method">{{ m.method }}</dd>
+        </div>
+        {% endfor %}
+      </dl>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="case__block">
+    <h4 class="case__subhead" id="case-{{ c.slug }}-decisions">Решения</h4>
+    <div class="decision-grid">
+      {% for d in c.decisions %}
+      <article class="decision">
+        <p class="decision__num" aria-hidden="true">0{{ loop.index }}</p>
+        <h5 class="decision__title">{{ d.title }}</h5>
+        <dl class="decision__facts">
+          <dt>Варианты</dt>
+          <dd>{{ d.options | join(" · ") }}</dd>
+          <dt>Выбрал</dt>
+          <dd>{{ d.choice }}</dd>
+          <dt>Почему</dt>
+          <dd>{{ d.why }}</dd>
+          <dt>Цена</dt>
+          <dd>{{ d.cost }}</dd>
+        </dl>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if c.compare %}
+  <div class="case__block">
+    <h4 class="case__subhead" id="case-{{ c.slug }}-compare">До и после</h4>
+    <figure class="compare js-compare">
+      <img class="compare__img" src="{{ c.compare.after }}" alt="{{ c.compare.after_alt }}"
+           srcset="{{ c.compare.after | replace('.webp', '-720.webp') }} 720w, {{ c.compare.after | replace('.webp', '-1080.webp') }} 1080w, {{ c.compare.after }} 1440w"
+           sizes="(max-width: 900px) 90vw, 1060px"
+           width="1440" height="810" loading="lazy" decoding="async">
+      <img class="compare__img compare__img--before" src="{{ c.compare.before }}" alt="{{ c.compare.before_alt }}"
+           srcset="{{ c.compare.before | replace('.webp', '-720.webp') }} 720w, {{ c.compare.before | replace('.webp', '-1080.webp') }} 1080w, {{ c.compare.before }} 1440w"
+           sizes="(max-width: 900px) 90vw, 1060px"
+           width="1440" height="810" loading="lazy" decoding="async">
+      <span class="compare__label compare__label--before" aria-hidden="true">До</span>
+      <span class="compare__label compare__label--after" aria-hidden="true">После</span>
+      <span class="compare__handle" aria-hidden="true"></span>
+      <input class="compare__range js-compare-range" type="range" min="0" max="100" value="50" step="1"
+             aria-label="Сравнение: до и после редизайна"
+             aria-valuetext="50 процентов — слева старый сайт, справа новый">
+    </figure>
+    <p class="case__caption">{{ c.compare.caption }}</p>
+  </div>
+  {% endif %}
+
+  {% if c.artifacts and c.artifacts.length %}
+  <div class="case__block">
+    <h4 class="case__subhead" id="case-{{ c.slug }}-artifacts">Артефакты</h4>
+    <div class="gallery">
+      {% for a in c.artifacts %}
+      {% if a.src != c.cover %}
+      <a class="gallery__item js-lightbox"
+         href="{{ a.src }}" target="_blank" rel="noopener"
+         data-group="{{ c.slug }}" data-caption="{{ a.caption }}"
+         aria-label="Открыть скриншот: {{ a.caption }}">
+        <img src="{{ a.src }}" alt=""
+             srcset="{{ a.src | replace('.webp', '-720.webp') }} 720w, {{ a.src | replace('.webp', '-1080.webp') }} 1080w, {{ a.src }} 1440w"
+             sizes="(max-width: 720px) 90vw, (max-width: 1100px) 45vw, 360px"
+             width="1440" height="810"
+             loading="lazy" decoding="async">
+        <span class="gallery__caption">{{ a.caption }}</span>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if c.retro %}
+  <blockquote class="retro">
+    <p class="kicker">Что бы я сделал иначе</p>
+    <p>{{ c.retro }}</p>
+  </blockquote>
+  {% endif %}
+
+  <footer class="case__foot">
+    <a class="text-link" href="{{ c.url }}" target="_blank" rel="noopener">Открыть {{ c.title }} <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href="#top">Наверх <span aria-hidden="true">↑</span></a>
+  </footer>
+</article>

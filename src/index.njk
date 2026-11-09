@@ -1,60 +1,209 @@
 ---
-ogImage: /img/og/og-home.png
-altUrl: /en/
 layout: layouts/base.njk
-lang: ru
 title: "Антон Стасюк — Frontend-разработчик"
-description: "Frontend-разработчик из Минска. Vue, Nuxt, React, TypeScript. Три года коммерческой разработки: маркетплейсы, интернет-магазины, PWA."
+description: "Frontend-разработчик из Минска. Vue, Nuxt, React, TypeScript. Три года в проде: маркетплейс, PWA с real-time, интернет-магазин. Кейсы, опыт, контакты и PDF."
+ogImage: /img/og/og-home.png
 ---
 
-<section class="hero">
-  <div class="l-container">
-    <p class="hero__kicker">Frontend-разработчик · Минск</p>
-    <h1 class="hero__title">Антон Стасюк</h1>
-    <p class="hero__lead">
-      Три года в проде. Vue, Nuxt, React. Собираю интерфейсы, которые быстро открываются
-      и не разваливаются через год.
-    </p>
-    <p class="hero__meta">
-      <span>React / Vue / TypeScript</span>
-      <span>удалённо или гибрид</span>
-      <span>открыт к предложениям</span>
-    </p>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="l-container hero__grid">
+    <div class="hero__text">
+      <p class="kicker hero__kicker">Frontend-разработчик · Минск</p>
+      <h1 class="hero__title" id="hero-title">
+        <span>Антон</span>
+        <span>Стасюк</span>
+      </h1>
+      <p class="hero__lead">
+        Собираю быстрые продуктовые интерфейсы на Vue и React.
+        Три года в проде: маркетплейс, PWA, интернет-магазин.
+        <span class="print-only hero__print-facts">LCP 2,4 → 1,5 с на abw.by · 30+ компонентов · 3 роли в real-time PWA.</span>
+      </p>
+      <p class="hero__stack">Vue 3 · Nuxt · React · TypeScript</p>
+
+      <div class="hero__actions">
+        <a class="btn" href="#work">Смотреть работы</a>
+        <a class="btn btn--ghost" href="/resume.pdf" download="Anton-Stasiuk-Frontend.pdf">Скачать PDF</a>
+      </div>
+
+      <p class="hero__status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Открыт к предложениям · удалённо или гибрид
+      </p>
+
+      <p class="hero__print print-only">
+        Минск · <a href="mailto:{{ site.email }}">{{ site.email }}</a> · <a href="{{ site.telegram }}">@AntonStasiuk</a> · <a href="{{ site.github }}">github.com/11Alone11</a> · 11alone11.github.io
+      </p>
+    </div>
+
+    <div class="hero__visual">
+      <div class="reel js-reel" role="group" aria-label="Избранные проекты">
+        <div class="reel__stage">
+          {% for work in works %}
+          {% set c = cases[work.slug] %}
+          <a class="reel__slide{% if loop.first %} is-active{% endif %}"
+             href="#{{ c.slug }}"
+             data-slide="{{ loop.index0 }}"
+             aria-hidden="{{ 'false' if loop.first else 'true' }}"
+             tabindex="{{ '0' if loop.first else '-1' }}"
+             aria-label="{{ c.title }} — смотреть кейс">
+            <span class="reel__chrome" aria-hidden="true">
+              <span class="reel__chrome-dots"><i></i><i></i><i></i></span>
+              <span class="reel__url">{{ c.title }}</span>
+            </span>
+            <span class="reel__media">
+              <img src="{{ c.cover }}" alt="{{ c.cover_alt }}"
+                   srcset="{{ c.cover | replace('.webp', '-720.webp') }} 720w, {{ c.cover | replace('.webp', '-1080.webp') }} 1080w, {{ c.cover }} 1440w"
+                   sizes="(max-width: 900px) 90vw, 560px"
+                   width="1440" height="810"
+                   loading="{{ 'eager' if loop.first else 'lazy' }}"
+                   fetchpriority="{{ 'high' if loop.first else 'auto' }}"
+                   decoding="async">
+            </span>
+            <span class="reel__caption">
+              <strong>{{ c.title }}</strong>
+              <span>{{ c.subtitle }}</span>
+            </span>
+          </a>
+          {% endfor %}
+        </div>
+
+        <div class="reel__controls">
+          <div class="reel__pager" role="group" aria-label="Выбор проекта">
+            {% for work in works %}
+            {% set c = cases[work.slug] %}
+            <button class="reel__dot{% if loop.first %} is-active{% endif %}" type="button"
+                    data-goto="{{ loop.index0 }}"
+                    aria-label="Показать {{ c.title }}"
+                    aria-current="{{ 'true' if loop.first else 'false' }}"></button>
+            {% endfor %}
+          </div>
+          <div class="reel__arrows">
+            <button class="reel__arrow js-reel-prev" type="button" aria-label="Предыдущий проект">
+              <span aria-hidden="true">←</span>
+            </button>
+            <button class="reel__arrow js-reel-next" type="button" aria-label="Следующий проект">
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <p class="reel__hint">Листайте проекты стрелками или свайпом</p>
+    </div>
   </div>
 </section>
 
-<section class="l-section" id="work">
-  <div class="l-container">
-    <div class="section-head">
-      <span class="section-head__index">01</span>
-      <h2 class="section-head__title">Избранные работы</h2>
+<section class="proof" aria-label="Ключевые результаты">
+  <dl class="l-container proof__grid">
+    <div class="proof__item">
+      <dt>LCP на abw.by</dt>
+      <dd>2,4 <span>→</span> 1,5 с</dd>
     </div>
+    <div class="proof__item">
+      <dt>Переиспользуемых компонентов</dt>
+      <dd>30+</dd>
+    </div>
+    <div class="proof__item">
+      <dt>Ролей в real-time PWA</dt>
+      <dd>3</dd>
+    </div>
+  </dl>
+</section>
 
-    <div class="work-list">
-      {% for work in works %}
-      <a class="work-item" href="/work/{{ work.slug }}/">
-        <span class="work-item__title">{{ work.title }}</span>
-        <span class="work-item__period">{{ work.period }}</span>
-        <span class="work-item__desc">{{ work.subtitle }}. {{ work.desc }}</span>
-      </a>
+<section class="section" id="work" aria-labelledby="work-title">
+  <div class="l-container">
+    <header class="section-head" data-reveal>
+      <p class="kicker">01 — Работы</p>
+      <h2 class="section-title" id="work-title">Маркетплейс, PWA и магазин</h2>
+      <p class="section-lead">
+        Маркетплейс, который перевели на современный стек без остановки продукта.
+        Мобильное PWA с обновлением цен в реальном времени. Магазин, собранный с нуля в одиночку.
+      </p>
+      <nav class="case-jump" aria-label="Кейсы">
+        {% for work in works %}
+        <a class="case-jump__link" href="#{{ work.slug }}">{{ work.title }}</a>
+        {% endfor %}
+      </nav>
+    </header>
+
+    {% for work in works %}
+    {% set c = cases[work.slug] %}
+    {% set caseIndex = loop.index %}
+    {% include "partials/case.njk" %}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section section--experience" id="experience" aria-labelledby="experience-title">
+  <div class="l-container">
+    <header class="section-head section-head--row" data-reveal>
+      <div>
+        <p class="kicker">02 — Опыт</p>
+        <h2 class="section-title" id="experience-title">Опыт и стек</h2>
+        <p class="section-lead">Пять позиций, три года коммерческой разработки. Резюме целиком — в PDF.</p>
+      </div>
+      <div class="section-head__actions">
+        <a class="btn btn--small" href="/resume.pdf" download="Anton-Stasiuk-Frontend.pdf">Скачать PDF</a>
+        <button class="btn btn--small btn--ghost js-print" type="button">Печать</button>
+      </div>
+    </header>
+
+    <div class="experience">
+      {% for job in experience %}
+      <article class="job">
+        <p class="job__period">{{ job.period }}</p>
+        <div class="job__body">
+          <h3 class="job__title">
+            {% if job.href %}<a href="{{ job.href }}">{{ job.title }}</a>{% else %}{{ job.title }}{% endif %}
+          </h3>
+          <p class="job__role">{{ job.role }} · {{ job.stack }}</p>
+          <p class="job__note">{{ job.note }}</p>
+        </div>
+      </article>
       {% endfor %}
     </div>
+
+    <div class="stack-grid">
+      <div class="stack-group">
+        <h3>Языки и фреймворки</h3>
+        <p>JavaScript, TypeScript, Vue 3, Nuxt, React, HTML, CSS / SCSS</p>
+      </div>
+      <div class="stack-group">
+        <h3>Данные и состояние</h3>
+        <p>Pinia, Redux Toolkit, TanStack Query, WebSocket, REST, JWT</p>
+      </div>
+      <div class="stack-group">
+        <h3>Инструменты</h3>
+        <p>Vite, Vitest, Docker, Git, SonarQube, SEO, PWA, Core Web Vitals</p>
+      </div>
+    </div>
+
+    <div class="education">
+      <div>
+        <h3>Образование</h3>
+        <p>БГУИР, Минск · Автоматизированные системы обработки информации, ФИТУ · 2025</p>
+      </div>
+      <div>
+        <h3>Языки</h3>
+        <p>Русский — родной · Английский — B1, читаю документацию и переписку</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="l-section" id="contact">
-  <div class="l-container">
-    <div class="section-head">
-      <span class="section-head__index">02</span>
-      <h2 class="section-head__title">Связаться</h2>
+<section class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="l-container contact__inner">
+    <div class="contact__text">
+      <p class="kicker">03 — Контакты</p>
+      <h2 class="contact__title" id="contact-title">Обсудим проект?</h2>
+      <p class="contact__lead">
+        Пишу в Telegram быстрее всего. Если нужен PDF — он уже готов, скачивается в один клик.
+      </p>
     </div>
-    <p class="hero__lead">
-      Пишу в телеграм быстрее всего. Если нужен PDF — соберу резюме на этой же неделе.
-    </p>
-    <ul class="contact-list">
-      <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-      <li><a href="{{ site.telegram }}" rel="noopener">@AntonStasiuk</a></li>
-      <li><a href="{{ site.github }}" rel="noopener">github.com/11Alone11</a></li>
-    </ul>
+    <div class="contact__actions">
+      <a class="btn btn--accent" href="mailto:{{ site.email }}">Написать на почту</a>
+      <a class="btn btn--ghost-light" href="{{ site.telegram }}" target="_blank" rel="noopener">Telegram</a>
+      <a class="btn btn--ghost-light" href="{{ site.github }}" target="_blank" rel="noopener">GitHub</a>
+      <a class="contact__email" href="mailto:{{ site.email }}">{{ site.email }}</a>
+    </div>
   </div>
 </section>

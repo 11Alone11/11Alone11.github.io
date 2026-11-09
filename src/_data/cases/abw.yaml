@@ -1,10 +1,11 @@
 slug: abw
-lang: ru
 title: abw.by
 subtitle: Маркетплейс автомобилей
 period: ноябрь 2024 — октябрь 2025
-period_html: "2024-11/2025-10"
 role: Frontend-разработчик
+url: "https://abw.by"
+cover: "/img/cases/abw/home.webp"
+cover_alt: "Главная abw.by: поиск автомобилей и подборки"
 stack:
   - Vue 3
   - Nuxt
@@ -75,20 +76,10 @@ metrics:
     source: резюме, ноябрь 2026 — раздел «Бонусторг»
 artifacts:
   - src: /img/cases/abw/home.webp
-    orientation: landscape
     caption: Поиск автомобилей — точка входа в сценарий покупки
   - src: /img/cases/abw/filters.webp
-    orientation: landscape
     caption: "Фильтры: состояние в URL, чипы, сохранённый поиск"
   - src: /img/cases/abw/form.webp
-    orientation: landscape
     caption: Подача объявления — пошаговая форма с черновиком
   - src: /img/cases/abw/vehicle.webp
-    orientation: landscape
     caption: Карточка автомобиля
-  - src: /img/cases/abw/news.webp
-    orientation: landscape
-    caption: Новости и авторские статьи
-retro: TODO
-sources:
-  - Резюме, ноябрь 2026
