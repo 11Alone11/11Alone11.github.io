@@ -1,0 +1,91 @@
+---
+layout: layouts/base.njk
+lang: en
+title: "Stack and decisions — how this site is built"
+description: "A static site without a framework: 11ty, hand-written BEM CSS, one script file. Budgets, accessibility, page weight."
+altUrl: /stack/
+---
+
+<section class="l-section">
+  <div class="l-container">
+    <p class="hero__kicker">Stack and decisions</p>
+    <h1 class="page-title">How this site is built</h1>
+    <p class="page-lead">
+      No framework, no bundler, no minification. Not a stance against tools, but a test
+      of how much can be done with less.
+    </p>
+  </div>
+</section>
+
+<section class="l-section">
+  <div class="l-container case__body case__body--flush">
+    <section class="case__section">
+      <h2 class="case__section-title">What it is made of</h2>
+      <dl class="decision__facts">
+        <dt>Templates</dt>
+        <dd>11ty 3 — HTML assembly only. The output is static files, no server.</dd>
+        <dt>Styles</dt>
+        <dd>One <code>styles.css</code>: <code>@layer</code>, custom properties, BEM. No preprocessor.</dd>
+        <dt>Scripts</dt>
+        <dd>One <code>main.js</code>, 2.5 KB raw. Theme handling and the few things that need JS.</dd>
+        <dt>Fonts</dt>
+        <dd>Literata for headings, Inter for text. Latin and Cyrillic subsets, 100 KB in total.</dd>
+        <dt>Hosting</dt>
+        <dd>GitHub Pages. A push to main builds and publishes the site.</dd>
+      </dl>
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Why no framework</h2>
+      <p class="prose">
+        The site needs no reactivity, no virtual DOM and no client-side routing: it is a
+        set of text pages. A framework here would add tens of kilobytes of JavaScript to
+        a page that opens in fractions of a second.
+      </p>
+      <p class="prose">
+        Frameworks stay where they pay off — in production projects. Here I tested the
+        opposite hypothesis: can a quality interface be built on the platform as it is.
+      </p>
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Budgets</h2>
+      <dl class="metric-list">
+        <div class="metric">
+          <dt class="metric__label">Page HTML</dt>
+          <dd class="metric__value"><span class="metric__after">2.4 KB</span></dd>
+          <dd class="metric__method">gzip, budget 6 KB</dd>
+        </div>
+        <div class="metric">
+          <dt class="metric__label">CSS</dt>
+          <dd class="metric__value"><span class="metric__after">4.5 KB</span></dd>
+          <dd class="metric__method">gzip, budget 8 KB</dd>
+        </div>
+        <div class="metric">
+          <dt class="metric__label">JS on first render</dt>
+          <dd class="metric__value"><span class="metric__after">0 KB</span></dd>
+          <dd class="metric__method">scripts are deferred, none blocks rendering</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">Accessibility</h2>
+      <ul class="case__list">
+        <li class="case__list-item">Semantic markup: <code>main</code>, labelled <code>section</code> elements, a labelled <code>nav</code>, <code>article</code> for case studies.</li>
+        <li class="case__list-item">Skip link and a visible focus ring on every interactive element.</li>
+        <li class="case__list-item">Text contrast at or above 4.5:1 in both themes.</li>
+        <li class="case__list-item">Animations turn off under <code>prefers-reduced-motion</code>.</li>
+        <li class="case__list-item">The theme follows the system setting until the user picks one.</li>
+      </ul>
+    </section>
+
+    <section class="case__section">
+      <h2 class="case__section-title">What is missing</h2>
+      <p class="prose">
+        Screenshots in the case studies are still placeholders — the real ones will come
+        later. A notes section was deliberately left out: an empty blog is worse than none.
+      </p>
+    </section>
+  </div>
+</section>

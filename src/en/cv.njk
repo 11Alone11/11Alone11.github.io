@@ -1,0 +1,116 @@
+---
+layout: layouts/base.njk
+lang: en
+title: "CV — Anton Stasiuk, Frontend Developer"
+description: "Experience, stack and education. Three years of commercial development: Vue, Nuxt, React, TypeScript."
+altUrl: /cv/
+---
+
+<section class="l-section">
+  <div class="l-container">
+    <p class="hero__kicker">CV</p>
+    <h1 class="page-title">Anton Stasiuk</h1>
+    <p class="page-lead">
+      Frontend developer. Vue 3, Nuxt, React, TypeScript. Minsk, remote or hybrid.
+    </p>
+    <ul class="contact-list">
+      <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+      <li><a href="{{ site.telegram }}" rel="noopener">@AntonStasiuk</a></li>
+      <li><a href="{{ site.github }}" rel="noopener">github.com/11Alone11</a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="l-section">
+  <div class="l-container">
+    <div class="section-head">
+      <span class="section-head__index">01</span>
+      <h2 class="section-head__title">Experience</h2>
+    </div>
+
+    <div class="cv-block">
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2025-11">November 2025</time> — <time datetime="2026-10">October 2026</time></p>
+        <div>
+          <h3 class="cv-entry__title">IT unit, Ministry of Internal Affairs</h3>
+          <p class="cv-entry__role">Frontend Developer · React, TypeScript, Redux Toolkit, TanStack Query, MUI, Mantine</p>
+          <p class="cv-entry__note">Project details are not disclosed.</p>
+        </div>
+      </article>
+
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2024-11">November 2024</time> — <time datetime="2025-10">October 2025</time></p>
+        <div>
+          <h3 class="cv-entry__title">abw.by</h3>
+          <p class="cv-entry__role">Frontend Developer · Vue 3, Nuxt, TypeScript, Pinia</p>
+          <p class="cv-entry__note">JavaScript to TypeScript and Nuxt 3 to Nuxt 4 migration, filters with URL state, LCP from 2.4 to 1.5 s. <a href="/en/work/abw/">Case study →</a></p>
+        </div>
+      </article>
+
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2024-03">March 2024</time> — <time datetime="2024-10">October 2024</time></p>
+        <div>
+          <h3 class="cv-entry__title">Beerzhevik</h3>
+          <p class="cv-entry__role">Frontend Developer · Vue 3, Nuxt 3, TypeScript, WebSocket</p>
+          <p class="cv-entry__note">PWA for a bar: real-time prices, JWT auth, three roles. <a href="/en/work/beerzhevik/">Case study →</a></p>
+        </div>
+      </article>
+
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2023-11">November 2023</time> — <time datetime="2024-03">March 2024</time></p>
+        <div>
+          <h3 class="cv-entry__title">veloman.by</h3>
+          <p class="cv-entry__role">Frontend Developer · Vue 3, Nuxt 3, TypeScript, Pinia, Sass</p>
+          <p class="cv-entry__note">Sole frontend developer: full store redesign from scratch, SSR, SEO. <a href="/en/work/veloman/">Case study →</a></p>
+        </div>
+      </article>
+
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2023-05">May 2023</time> — <time datetime="2023-08">August 2023</time></p>
+        <div>
+          <h3 class="cv-entry__title">ProEdu</h3>
+          <p class="cv-entry__role">Frontend Developer · JavaScript, Telegram WebApps API, Sass</p>
+          <p class="cv-entry__note">Telegram Mini App: tasks, quests and rewards, WebView-friendly layout.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="l-section">
+  <div class="l-container">
+    <div class="section-head">
+      <span class="section-head__index">02</span>
+      <h2 class="section-head__title">Stack</h2>
+    </div>
+    <ul class="tag-list">
+      {% for tag in ["JavaScript", "TypeScript", "Vue 3", "Nuxt", "React", "Redux Toolkit", "TanStack Query", "Pinia", "HTML", "CSS / SCSS", "Vite", "Vitest", "Docker", "Git", "SonarQube", "SEO", "PWA"] %}
+      <li class="tag">{{ tag }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="l-section">
+  <div class="l-container">
+    <div class="section-head">
+      <span class="section-head__index">03</span>
+      <h2 class="section-head__title">Education and languages</h2>
+    </div>
+    <div class="cv-block">
+      <article class="cv-entry">
+        <p class="cv-entry__period"><time datetime="2025">2025</time></p>
+        <div>
+          <h3 class="cv-entry__title">BSUIR, Minsk</h3>
+          <p class="cv-entry__role">Automated Information Processing Systems, FITU</p>
+        </div>
+      </article>
+      <article class="cv-entry">
+        <p class="cv-entry__period">Languages</p>
+        <div>
+          <p class="cv-entry__role">Russian — native · English — B1, I read documentation and work correspondence</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

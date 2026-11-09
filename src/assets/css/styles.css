@@ -312,10 +312,22 @@
     letter-spacing: 0.01em;
   }
 
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+  }
+
   .site-nav__list {
     display: flex;
     align-items: center;
     gap: clamp(0.75rem, 2vw, 1.75rem);
+  }
+
+  .site-nav__link--lang {
+    padding-left: clamp(0.75rem, 2vw, 1.5rem);
+    border-left: var(--rule-width) solid var(--rule);
+    white-space: nowrap;
   }
 
   .site-nav__link {

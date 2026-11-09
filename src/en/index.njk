@@ -1,0 +1,59 @@
+---
+layout: layouts/base.njk
+lang: en
+title: "Anton Stasiuk — Frontend Developer"
+description: "Frontend developer in Minsk. Vue, Nuxt, React, TypeScript. Three years of commercial work: marketplaces, e-commerce, PWAs."
+altUrl: /
+---
+
+<section class="hero">
+  <div class="l-container">
+    <p class="hero__kicker">Frontend Developer · Minsk</p>
+    <h1 class="hero__title">Anton Stasiuk</h1>
+    <p class="hero__lead">
+      Three years in production. Vue, Nuxt, React. I build interfaces that open fast
+      and do not fall apart a year later.
+    </p>
+    <p class="hero__meta">
+      <span>React / Vue / TypeScript</span>
+      <span>remote or hybrid</span>
+      <span>open to opportunities</span>
+    </p>
+  </div>
+</section>
+
+<section class="l-section" id="work">
+  <div class="l-container">
+    <div class="section-head">
+      <span class="section-head__index">01</span>
+      <h2 class="section-head__title">Selected work</h2>
+    </div>
+
+    <div class="work-list">
+      {% for work in en.works %}
+      <a class="work-item" href="/en/work/{{ work.slug }}/">
+        <span class="work-item__title">{{ work.title }}</span>
+        <span class="work-item__period">{{ work.period }}</span>
+        <span class="work-item__desc">{{ work.subtitle }}. {{ work.desc }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="l-section" id="contact">
+  <div class="l-container">
+    <div class="section-head">
+      <span class="section-head__index">02</span>
+      <h2 class="section-head__title">Get in touch</h2>
+    </div>
+    <p class="hero__lead">
+      Telegram is the fastest way to reach me. Need a PDF version? I will put one together.
+    </p>
+    <ul class="contact-list">
+      <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+      <li><a href="{{ site.telegram }}" rel="noopener">@AntonStasiuk</a></li>
+      <li><a href="{{ site.github }}" rel="noopener">github.com/11Alone11</a></li>
+    </ul>
+  </div>
+</section>

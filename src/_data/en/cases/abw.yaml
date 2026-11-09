@@ -1,0 +1,85 @@
+slug: abw
+lang: en
+title: abw.by
+subtitle: Automotive marketplace
+period: November 2024 — October 2025
+role: Frontend Developer
+stack:
+  - Vue 3
+  - Nuxt
+  - TypeScript
+  - Pinia
+  - Vite
+summary: >-
+  Moved the platform from JavaScript to TypeScript, upgraded Nuxt and rebuilt the
+  data flow: filters, listing submission, Core Web Vitals.
+context: >-
+  A large car classifieds platform. The codebase had grown on JavaScript for years,
+  the interface was assembled from inconsistent blocks, and page speed relied on
+  caching. The task was to modernise the project without pausing the product.
+constraints:
+  - Live product with weekly releases — no big-bang rewrite.
+  - Legacy JavaScript without types or tests.
+  - No design system; components were duplicated across sections.
+decisions:
+  - title: Migrating from JavaScript to TypeScript and from Nuxt 3 to Nuxt 4
+    options:
+      - Rewrite the sections from scratch
+      - Migrate section by section
+      - Stay on JavaScript
+    choice: "Section-by-section migration: types in shared modules first, then the sections"
+    why: >-
+      A full rewrite would stall the product for months, while targeted typing pays
+      off immediately and does not block releases.
+    cost: >-
+      For a while the project carries two code styles, and that has to be explained
+      in every review.
+  - title: Rebuilt filtering and search with state in the URL
+    options:
+      - Keep filters in Pinia
+      - Keep filters in the URL
+      - Hybrid
+    choice: URL as the source of truth, Pinia as derived state
+    why: >-
+      A filtered list can be shared as a link, and reloading the page no longer
+      resets the user's choice.
+    cost: >-
+      Synchronisation takes care: every parameter needs a default and a
+      normalisation rule.
+  - title: Compressed the critical loading path
+    options:
+      - Leave as is
+      - Optimise images and caching
+      - Rewrite the rendering
+    choice: Above-the-fold images and static asset caching
+    why: >-
+      Most of a page's weight is listing photos, not JavaScript. The cheapest change
+      with the most visible effect.
+    cost: >-
+      New image-size rules appeared, and everyone adding a block has to follow them.
+metrics:
+  - label: LCP
+    before: 2.4 s
+    after: 1.5 s
+    method: above-the-fold images and static asset caching
+    source: resume, November 2026 — Bonustorg section, LCP and CLS bullet
+  - label: Reusable UI components
+    after: 30+
+    method: extracted into the project's shared library
+    source: resume, November 2026 — Bonustorg section
+  - label: Sections
+    after: 5 new, 7 reworked
+    method: including the multi-step listing form
+    source: resume, November 2026 — Bonustorg section
+artifacts:
+  - src: /img/cases/abw/home.png
+    orientation: landscape
+    caption: Home page — placeholder until the real screenshot arrives
+    source: placeholder
+  - src: /img/cases/abw/filters.png
+    orientation: landscape
+    caption: Filters with URL state — placeholder
+    source: placeholder
+retro: TODO
+sources:
+  - Resume, November 2026

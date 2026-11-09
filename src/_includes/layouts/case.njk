@@ -1,10 +1,11 @@
 ---
 layout: layouts/base.njk
 ---
-{% set c = cases[caseId] %}
+{% set store = en.cases if lang == "en" else cases %}
+{% set c = store[caseId] %}
 <article class="case">
   <header class="case__header l-container">
-    <a class="back-link" href="/work/">← Все работы</a>
+    <a class="back-link" href="{{ '/en/work/' if lang == 'en' else '/work/' }}">{{ i18n[lang or 'ru'].back }}</a>
     <p class="case__kicker">{{ c.period }} · {{ c.role }}</p>
     <h1 class="case__title">{{ c.title }}</h1>
     <p class="case__subtitle">{{ c.subtitle }}</p>
@@ -16,30 +17,30 @@ layout: layouts/base.njk
 
   <div class="l-container case__body">
     <section class="case__section">
-      <h2 class="case__section-title">Контекст</h2>
+      <h2 class="case__section-title">{{ i18n[lang or 'ru'].case_context }}</h2>
       <p class="prose">{{ c.context }}</p>
     </section>
 
     <section class="case__section">
-      <h2 class="case__section-title">Ограничения</h2>
+      <h2 class="case__section-title">{{ i18n[lang or 'ru'].case_constraints }}</h2>
       <ul class="case__list">
         {% for item in c.constraints %}<li class="case__list-item">{{ item }}</li>{% endfor %}
       </ul>
     </section>
 
     <section class="case__section">
-      <h2 class="case__section-title">Решения</h2>
+      <h2 class="case__section-title">{{ i18n[lang or 'ru'].case_decisions }}</h2>
       {% for d in c.decisions %}
       <article class="decision">
         <h3 class="decision__title">{{ d.title }}</h3>
         <dl class="decision__facts">
-          <dt>Варианты</dt>
+          <dt>{{ i18n[lang or 'ru'].label_options }}</dt>
           <dd>{{ d.options | join(" · ") }}</dd>
-          <dt>Выбрал</dt>
+          <dt>{{ i18n[lang or 'ru'].label_choice }}</dt>
           <dd>{{ d.choice }}</dd>
-          <dt>Почему</dt>
+          <dt>{{ i18n[lang or 'ru'].label_why }}</dt>
           <dd>{{ d.why }}</dd>
-          <dt>Цена</dt>
+          <dt>{{ i18n[lang or 'ru'].label_cost }}</dt>
           <dd>{{ d.cost }}</dd>
         </dl>
       </article>
@@ -47,9 +48,9 @@ layout: layouts/base.njk
     </section>
 
     <section class="case__section">
-      <h2 class="case__section-title">Результат</h2>
+      <h2 class="case__section-title">{{ i18n[lang or 'ru'].case_result }}</h2>
       {% if c.no_metrics %}
-      <p class="prose">Числовых метрик не сохранилось: {{ c.metrics[0].method }}.</p>
+      <p class="prose">{{ i18n[lang or 'ru'].no_metrics }}: {{ c.metrics[0].method }}.</p>
       {% else %}
       <dl class="metric-list">
         {% for m in c.metrics %}
@@ -72,11 +73,11 @@ layout: layouts/base.njk
 
     {% if c.compare %}
     <section class="case__section">
-      <h2 class="case__section-title">До и после</h2>
+      <h2 class="case__section-title">{{ i18n[lang or 'ru'].case_before_after }}</h2>
       <figure class="compare js-compare">
         <img class="compare__img" src="{{ c.compare.after }}" alt="{{ c.compare.after_alt }}" width="1440" height="900" loading="lazy" decoding="async">
         <img class="compare__img compare__img--before" src="{{ c.compare.before }}" alt="{{ c.compare.before_alt }}" width="1440" height="900" loading="lazy" decoding="async">
-        <span class="compare__hint" aria-hidden="true">Сдвиньте ползунок</span>
+        <span class="compare__hint" aria-hidden="true">{{ i18n[lang or 'ru'].compare_hint }}</span>
         <input class="compare__range" type="range" min="0" max="100" value="50" step="1" aria-label="Сравнение: до и после редизайна">
       </figure>
       <figcaption class="artifact__caption">{{ c.compare.caption }}</figcaption>
@@ -84,7 +85,7 @@ layout: layouts/base.njk
     {% endif %}
 
     <section class="case__section">
-      <h2 class="case__section-title">Артефакты</h2>
+      <h2 class="case__section-title">{{ i18n[lang or 'ru'].case_artifacts }}</h2>
       <div class="artifact-grid">
         {% for a in c.artifacts %}
         <figure class="artifact artifact--{{ a.orientation }}">
@@ -96,7 +97,7 @@ layout: layouts/base.njk
     </section>
 
     <section class="case__section">
-      <h2 class="case__section-title">Источники</h2>
+      <h2 class="case__section-title">{{ i18n[lang or 'ru'].case_sources }}</h2>
       <ul class="case__list case__list--plain">
         {% for s in c.sources %}<li class="case__list-item">{{ s }}</li>{% endfor %}
       </ul>

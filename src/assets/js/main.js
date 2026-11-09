@@ -61,7 +61,9 @@ if (budgetField && window.performance && performance.getEntriesByType) {
     });
 
     if (total > 0) {
-      budgetField.textContent = "эта страница: " + Math.round(total / 1024) + " КБ";
+      var label = budgetField.getAttribute("data-label") || "this page";
+      var unit = document.documentElement.lang === "en" ? " KB" : " КБ";
+      budgetField.textContent = label + ": " + Math.round(total / 1024) + unit;
     }
   });
 }

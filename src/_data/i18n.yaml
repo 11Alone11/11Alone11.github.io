@@ -1,0 +1,47 @@
+ru:
+  skip: Перейти к содержанию
+  theme: Переключить тему
+  nav_label: Основная навигация
+  lang_label: Язык сайта
+  lang_switch: English
+  lang_switch_url: /en/
+  budget: эта страница
+  anatomy: Анатомия страницы
+  back: ← Все работы
+  case_context: Контекст
+  case_constraints: Ограничения
+  case_decisions: Решения
+  case_result: Результат
+  case_artifacts: Артефакты
+  case_sources: Источники
+  case_before_after: До и после
+  label_options: Варианты
+  label_choice: Выбрал
+  label_why: Почему
+  label_cost: Цена
+  no_metrics: Числовых метрик не сохранилось
+  compare_hint: Сдвиньте ползунок
+
+en:
+  skip: Skip to content
+  theme: Toggle theme
+  nav_label: Main navigation
+  lang_label: Site language
+  lang_switch: Русский
+  lang_switch_url: /
+  budget: this page
+  anatomy: Page anatomy
+  back: ← All work
+  case_context: Context
+  case_constraints: Constraints
+  case_decisions: Decisions
+  case_result: Result
+  case_artifacts: Artifacts
+  case_sources: Sources
+  case_before_after: Before and after
+  label_options: Options
+  label_choice: Chose
+  label_why: Why
+  label_cost: Cost
+  no_metrics: No numeric metrics were preserved
+  compare_hint: Drag the slider
